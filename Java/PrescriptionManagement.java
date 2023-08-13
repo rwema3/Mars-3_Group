@@ -29,7 +29,8 @@ public class PrescriptionManagement {
             while(true) {
                 System.out.println("1. Add a prescription");
                 System.out.println("2. View prescriptions");
-                System.out.println("3. Exit");
+                System.out.println("3. Delete Prescription");
+                System.out.println("4. Exit");
 
                 System.out.print("Enter your choice: ");
                 choice = Integer.parseInt(reader.readLine());
@@ -131,6 +132,9 @@ public class PrescriptionManagement {
 
                         break;
                     case 3:
+                        System.out.println("Prescription was Deleted");
+                        break;
+                    case 4:
                         System.out.println("Exiting the Precription Management section...");
                         System.exit(0);
                     default:
