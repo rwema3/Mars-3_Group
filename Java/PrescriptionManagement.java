@@ -126,7 +126,10 @@ public class PrescriptionManagement {
 
                         break;
                     case 3:
-                        System.out.println("Prescription was Deleted");
+                        System.out.print("Enter Prescription ID to delete: ");
+                        String prescriptionIDToDelete = reader.readLine();
+                        prescription.deletePrescription(prescriptionIDToDelete);
+                        System.out.println("Prescription with ID " + prescriptionIDToDelete + " deleted.");
                         break;
                     case 4:
                         System.out.println("Exiting the Precription Management section...");

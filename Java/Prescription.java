@@ -182,5 +182,35 @@ public class Prescription {
         return prescriptions;
     }
 
+    public void deletePrescription(String prescriptionIDToDelete) throws IOException, ParseException {
+        JSONParser parser = new JSONParser();
+        JSONArray existingPrescriptions;
+
+        try {
+            existingPrescriptions = (JSONArray) parser.parse(new FileReader(filePath));
+        } catch (IOException e) {
+            existingPrescriptions = new JSONArray();
+        }
+
+        JSONArray updatedPrescriptions = new JSONArray();
+
+        for (Object obj : existingPrescriptions) {
+            JSONObject prescriptionObject = (JSONObject) obj;
+            String prescriptionID = (String) prescriptionObject.get("PrescriptionID");
+
+            if (!prescriptionID.equals(prescriptionIDToDelete)) {
+                updatedPrescriptions.add(prescriptionObject);
+            }
+        }
+
+        try (FileWriter fileWriter = new FileWriter(filePath)) {
+            fileWriter.write(updatedPrescriptions.toJSONString());
+            fileWriter.flush();
+            System.out.println("Prescription deleted from prescriptions.json successfully!");
+        } catch (IOException e) {
+            System.out.println("Error while writing data to file: " + e.getMessage());
+        }
+    }
+
 }
 
