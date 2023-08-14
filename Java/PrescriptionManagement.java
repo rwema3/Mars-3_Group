@@ -8,14 +8,12 @@ import java.text.DecimalFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
+import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
-import org.json.simple.parser.JSONParser;
-
 public class PrescriptionManagement {
-
 
 
     public static void main(String[] args) throws IOException, ParseException {
@@ -24,9 +22,9 @@ public class PrescriptionManagement {
         int choice, numMedications;
         Prescription prescription = new Prescription();
 
-        while(true) {
+        while (true) {
 
-            while(true) {
+            while (true) {
                 System.out.println("1. Add a prescription");
                 System.out.println("2. View prescriptions");
                 System.out.println("3. Delete Prescription");
@@ -51,7 +49,6 @@ public class PrescriptionManagement {
                         //setting the date
                         prescription.setDate(LocalDate.now());
 
-
                         System.out.print("Enter the number of medications to add: ");
                         numMedications = Integer.parseInt(reader.readLine());
 
@@ -59,10 +56,11 @@ public class PrescriptionManagement {
                         String medicationName, medicationDetails, dosage, medicationID;
                         int quantity;
 
-                        if(!displayMedications("products.json")) {
+                        if (! displayMedications("products.json")) {
                             System.out.println("No medications available\n");
                             System.out.println("Exiting the Precription Management section...");
                             System.exit(0);
+
                         }
 
 
@@ -96,29 +94,25 @@ public class PrescriptionManagement {
                         prescription.addPrescription(prescription);
 
 
-
                         break;
 
 
                     case 2:
                         // Listing all prescriptions in the system
-                        ArrayList <Prescription> prescriptions = prescription.viewPrescription();
-                        if(prescriptions.size()==0) {
+                        ArrayList<Prescription> prescriptions = prescription.viewPrescription();
+                        if (prescriptions.size() == 0) {
                             System.out.println("No precriptions available\n");
-                        }
-                        else {
+                        } else {
                             System.out.println("| PrescriptionID |  DoctorName   |    CustomerID | \tDate\t | ");
                             System.out.println("******************************************************************");
 
-                            for(Prescription p: prescriptions)
-                            {
-                                System.out.println("|\t  "+ p.getPrecriptionID()+"\t\t"+ p.getDoctorName()+ "\t\t  " + p.getCustomerID()+"\t\t" + p.getDate());
+                            for (Prescription p : prescriptions) {
+                                System.out.println("|\t  " + p.getPrecriptionID() + "\t\t" + p.getDoctorName() + "\t\t  " + p.getCustomerID() + "\t\t" + p.getDate());
 
                                 System.out.println("");
                                 System.out.println("| MedicationID |  \tName    | \t Quantity | ");
-                                for(Medication med : p.getMedications())
-                                {
-                                    System.out.println("|\t  "+ med.getID()+"\t\t"+ med.getName()+ "\t\t " + med.getQuantity() );
+                                for (Medication med : p.getMedications()) {
+                                    System.out.println("|\t  " + med.getID() + "\t\t" + med.getName() + "\t\t " + med.getQuantity());
                                     //Use to format String to 10 characters
                                     //String.format("%-10s", med.getName().substring(0, Math.min(med.getName().length(), 10)));
                                 }
@@ -149,41 +143,43 @@ public class PrescriptionManagement {
     }
 
 
-
-
     public static boolean displayMedications(String filePath) throws FileNotFoundException, IOException, ParseException {
         DecimalFormat decimalFormat = new DecimalFormat("#.00");
         File file = new File(filePath);
 
-        if(!file.exists()) {
+        if (!file.exists()) {
             System.out.println("The products.json doesnot exist, creating a new product file");
             file.createNewFile();
         }
 
         JSONParser parser = new JSONParser();
-        try(FileReader fileReader = new FileReader(filePath)){
+        try (FileReader fileReader = new FileReader(filePath)) {
             if (fileReader.read() == -1) {
                 return false;
-            }
-            else {
+            } else {
                 fileReader.close();
                 JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(filePath));
 
                 System.out.println("---------------------------------------------------------------------------------------");
-                System.out.println("|\t"  + "\t\t  "  + "\t\t\t\t");
-                System.out.println("|\t" + "\t\t"  +  "Available Medications" + "\t\t");
-                System.out.println("|\t"  + "\t\t  "  + "\t\t\t\t");
+                System.out.println("|\t" + "\t\t  " + "\t\t\t\t");
+                System.out.println("|\t" + "\t\t" + "Available Medications" + "\t\t");
+                System.out.println("|\t" + "\t\t  " + "\t\t\t\t");
                 System.out.println("---------------------------------------------------------------------------------------");
                 System.out.println("| Medication ID |  Medication Name   |    Medication Price |    Medication Quantity |");
                 System.out.println("---------------------------------------------------------------------------------------");
 
-                for (Object obj: jsonArray) {
-                    JSONObject jsonObject =(JSONObject) obj;
+                for (Object obj : jsonArray) {
+                    JSONObject jsonObject = (JSONObject) obj;
 
                     String medicationID = (String) jsonObject.get("code");
                     String medicationName = (String) jsonObject.get("name");
-                    Double medicationPrice = (Double) jsonObject.get("price");
-                    long medicationQuantity = (long) jsonObject.get("quantity");
+//                    Double medicationPrice = (Double) jsonObject.get("price");
+
+                    String priceString = (String) jsonObject.get("price");
+                    Double medicationPrice = Double.parseDouble(priceString);
+
+                    String quantityString = (String) jsonObject.get("quantity");
+                    long medicationQuantity = Long.parseLong(quantityString);
 
 
                     System.out.println("|\t" + medicationID + "\t\t" + medicationName + "\t\t  " + decimalFormat.format(medicationPrice) + "\t\t\t  " + medicationQuantity + "\t\t");
@@ -197,10 +193,6 @@ public class PrescriptionManagement {
         return true;
 
     }
-
-
-
-
 
 
 }

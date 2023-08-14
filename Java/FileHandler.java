@@ -9,9 +9,9 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class FileHandler {
-	
-	private String filePath = "prescriptions.json";
-	
+
+    private String filePath = "prescriptions.json";
+
 
     // TODO:  Add missing code to be able to handle file
 
@@ -19,7 +19,7 @@ public class FileHandler {
         JSONParser parser = new JSONParser();
         try (FileReader fileReader = new FileReader(filePath)) {
             if (fileReader.read() == -1) {
-                return new JSONArray(); 
+                return new JSONArray();
             } else {
                 fileReader.close();
                 return (JSONArray) parser.parse(new FileReader(filePath));
