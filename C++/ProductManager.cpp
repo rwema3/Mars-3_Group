@@ -4,6 +4,7 @@ class ProductManager
 {
 private:
     ProductClass pClass;
+    FileHandler fHandler;
 public:
     int getMenu(){
 
@@ -16,13 +17,15 @@ public:
             cout<<"2. Search Products By Name"<<endl;
             cout<<"3. Search Products By Brand"<<endl;
             cout<<"4. Search Products By Category"<<endl;
-            cout<<"5. Exit"<<endl;
+            cout<<"5. Update a Product"<<endl;
+            cout<<"6. Delete a Product"<<endl;
+            cout<<"7. Exit"<<endl;
 
             // Select a value between 1 and 4
             cout<<"Enter your choice: ";
             cin>>selectedChoice;
          
-            if(cin.fail() || selectedChoice<1 || selectedChoice>5 ){
+            if(cin.fail() || selectedChoice<1 || selectedChoice>7 ){
 
                 cout<<"Enter a valid choice"<<endl;
                 cin.clear();
@@ -42,6 +45,36 @@ public:
         FileHandler fHandler;
         fHandler.saveToJsonFile(p);
     }
+
+         void deleteProduct()
+     {
+         string productCode;
+         cout << "Enter the code of the product to delete: ";
+         cin >> productCode;
+
+         vector<Product> productList = fHandler.readJsonFile();
+
+         bool found = false;
+         for (size_t i = 0; i < productList.size(); i++)
+         {
+             if (productList[i].code == productCode)
+             {
+                 productList.erase(productList.begin() + i);
+                 found = true;
+                 break;
+             }
+         }
+
+         if (found)
+         {
+             cout << "Product deleted successfully." << endl;
+             fHandler.saveToJsonFile(productList);
+         }
+         else
+         {
+             cout << "Product  not found." << endl;
+         }
+     }
     
 };
 
@@ -58,7 +91,7 @@ int main()
     vector<Product> prodList;
     int choice = -1;
 
-    while ( choice !=5)
+    while ( choice !=7)
     {
         /* code */
 
@@ -107,6 +140,18 @@ int main()
         }
         
         else if (choice == 5){
+            cout<< "UpdaTE a Product"<<endl;
+            
+
+        }
+
+         else if (choice == 6){
+            prodManager.deleteProduct();
+            
+
+        }
+
+         else if (choice == 7){
             cout<< "Exiting Product Catalog Program..........";
             return 0;
 

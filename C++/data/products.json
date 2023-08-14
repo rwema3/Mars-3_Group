@@ -1,7 +1,6 @@
 [
-{"code":"u4CXQKHSET7S65FtIdwU5cVWQ8Qjh19Qo","name":"Rwema","brand":"Brand 1","description":"Description 1","dosage_instruction":"Dosage 1‚²ô2K","price":290.000000,"quantity":0,"category":"Category 1","requires_prescription":0},
-{"code":"VsCLBDbuOlAme7hX9nIsaQEoi9OsZ6oIP","name":"Dp","brand":"Brand 2","description":"description 2","dosage_instruction":"dosage 2†²ñ2K","price":0.900000,"quantity":12,"category":"category 2","requires_prescription":0},
-{"code":"R8Ibu4fwETzZk5CUWsHwjfSMiVJV9jQMm","name":"Name 3","brand":"brand 3","description":"descr","dosage_instruction":"dosage 3‚²ô2K","price":1490.900024,"quantity":13,"category":"category 3","requires_prescription":1},
-{"code":"LjXZKgVjLAyh8hdD5FmSPBq2EXeDaeJxO","name":"Medication1","brand":"Brand 1","description":"Description 1","dosage_instruction":"Dosage Instruction 1","price":1000.989990,"quantity":11,"category":"Category 1","requires_prescription":1},
-{"code":"sJdYpuV9m8g","name":"Resire","brand":"rw","description":"dosses","dosage_instruction":"21","price":200.000000,"quantity":4,"category":"cure","requires_prescription":0}
+{"code":"u4CXQKHSET7S65FtIdwU5cVWQ8Qjh19Qo","name":"Rwema","brand":"Brand 1","description":"Description 1","dosage_instruction":"Dosage 1ï¿½ï¿½ï¿½2K","price":290.000000,"quantity":0,"category":"Category 1","requires_prescription":0},
+{"code":"3","name":"ew","brand":"ew","description":"ew","dosage_instruction":"3","price":3.000000,"quantity":3,"category":"ew","requires_prescription":1},
+{"code":"Ddsumbvtemq","name":"damizo","brand":"damiao","description":"damminz","dosage_instruction":"2","price":22.000000,"quantity":21,"category":"21","requires_prescription":1},
+{"code":"G0LWvt6Xhuy","name":"dami","brand":"damoa","description":"daz","dosage_instruction":"3","price":122.000000,"quantity":43,"category":"dd","requires_prescription":0}
 ]

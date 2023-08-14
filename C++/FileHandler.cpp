@@ -49,6 +49,7 @@ class FileHandler{
         return prodList;
     };
 
+
     void saveToJsonFile(Product p){
 
         vector<Product> pList;
@@ -74,7 +75,16 @@ class FileHandler{
             jsonFile.close();
             return;
 
-        }
+            
+       // Delete the file.
+    int ret = remove(filename.c_str());
+    if (ret != 0) {
+        std::cout << "Error deleting file: " << strerror(errno) << "\n";
+        return ;
+    } 
+
+    }
+     
 
     ofstream jsonFile(filename);
     jsonFile<<"["<<endl;
@@ -82,15 +92,22 @@ class FileHandler{
 
         if(i< pList.size() -1){
             jsonFile<< pClass.toJson(pList.at(i))<<","<<endl;
+            
         }
+
         else{
             jsonFile<< pClass.toJson(pList.at(i))<<endl;
         }
     }
-    jsonFile<<"]"<<endl;      
-    
+
+    jsonFile<<"]"<<endl;  
+
     jsonFile.close();
+ 
 
 
     }
+
+     
+
 };
