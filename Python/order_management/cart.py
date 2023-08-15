@@ -1,50 +1,37 @@
+## A cart is which is a group of products with a quantity to purchase.
+
 from .product import Product
 from .stock import Stock
 
 class Cart:
-    """Represents a cart with a list of products and quantity
-
-    Attributes:
-        products: a dictionary with the key being the ID of the products, and the value being the quantity
-        added
-    """
     def __init__(self, stock: Stock) -> None:
         self.products = {}
         self.stock = stock
 
-    def add(self, productCode: str, quantity: int):
-        """Adds a product to the cart with the specified quantity
-        
-        Args:
-            productCode: the identifier of the product
-            quantity: quantity to add
+    def empty(self):
+        self.products = {}
 
-        Returns: None
-        """
-        #TODO: Make sure the quantity is valid (> 0 and <= to the quantity in the stock)
-        #TODO: If the product was already in the cart, increment the quantity
-        
-        #TODO: After the checks, add the product to the dictionary
+    # we can add and also increase the size when there is more element
+    def add(self, productCode: str, quantity: int, prescriptionID: str = None):
+        assert quantity > 0, 'ordered quantity is less than 1.'
 
-    def __str__(self) -> str:
-        """String representation of the cart
-        """
-        #TODO: Return a string representation of a cart that shows the products, their quantity, unit price, total price. And also the total price of the cart
-        # Feel free to format it the way you want to
-        return NotImplemented
+        # retrieve the previous value
+        quantity += self.products.get(productCode, 0)
+        product = self.stock.getProductByID(productCode)
+        assert product.quantity >= quantity, 'quantity requested is higher than quantity available'
+        # set the value in the dictionary
+        self.products[product.code] = quantity
 
     def remove(self, code):
-        """
-        Removes a specific product from the cart """
-        #TODO: Removes a product from the cart. safely fail if the product code is not found
+        try:
+            self.products.pop(code)
+        except KeyError:
+            pass
 
     def clear(self):
-        """Clears up the cart.
-        """
+        self.products.clear()
 
-    @property
     def cost(self):
-        """Returns the total cost of the cart"""
-        #TODO: implement the function
+        return sum([product.price * quantity for code, quantity in self.products.items() if (product := self.stock.getProductByID(code))])
 
     
