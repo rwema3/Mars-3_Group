@@ -1,17 +1,6 @@
-class Product:
-    """Class representing a medication / product in the project.
+import json
 
-    Attributes:
-        code: unique identifier of the product (string)
-        name: name of the product (string)
-        brand: the brand of the product (string)
-        description: a textual description of the project (string)
-        quantity: the quantity of products available in the stock (int)
-        price: unit price of the project (float)
-        dosage_instruction: instructions to take the medicine (string, optional)
-        requires_prescription: whether the medication requires a prescription (bool)
-        
-    """
+class Product:
     def __init__(
             self, 
             code: int, 
@@ -33,15 +22,11 @@ class Product:
         self.dosage_instruction = dosage_instruction
         self.requires_prescription = (requires_prescription != 0)
 
-    def to_json(self) -> str:
-        """Returns a valid JSON representation of the object
-
-        Arguments:
-
-        Returns: A JSON string.
-        """
-        #TODO: Implement the function
-        return NotImplemented
+    def to_json(self):
+        return json.dumps(self.__dict__)
 
     def __str__(self) -> str:
         return self.name
+    
+    def __repr__(self) -> str:
+        return f'[{self.code}]{self.name}, {self.brand}: {self.quantity}x, {self.price}'
