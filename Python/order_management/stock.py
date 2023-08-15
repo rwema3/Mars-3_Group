@@ -3,49 +3,37 @@ from typing import List
 from .product import Product
 
 class Stock:
-    """Represents the catalog of products
-    
-    Attributes:
-        products: the list of products
-    """
     def __init__(self, products: List[Product]) -> None:
         self.products = products
 
     def update(self, id: int, change: int):
-        """Update the quantity of a product by adding or removing
-        
-        Args:
-            id: identifier of the product
-            change: the value by which the quantity should be update (+1 adds 1, -2 removes 2 for example)
-        """
-        #TODO: Make sure the product exists, and that by making the change, the value is still >= 0
-        
-        #TODO: Update the quantity
+        assert id in self.products, 'requested product does not exist'
+        assert self.products[id].quantity + change >= 0, "Invalid change. Would set quantity to a negative value"
+        self.products[id].quantity += change
 
-    def getProductByID(self, id: int) -> Product:
-        """Gets a product by its ID
-
-        Args:
-            id: identifier of the product
-        
-        Returns: the product's object
-        """
-        #TODO: Implement te function
+    def getProductByID(self, id: int):
+        try:
+            return self.products[id]
+        except KeyError:
+            raise ValueError("The requested product does not exist")
         
     def dump(self, outfile: str):
-        """Saves the stock to a JSON file"""
-        #TODO: Implement the function
+        products = list([product.__dict__ for product in self.products.values()])
+        with open(outfile, 'w') as fout:
+            json.dump(products, fout)
     
-    @staticmethod
-    def load(infile: str):
-        """Loads the stock from an existing file
-        
-        Args: 
-            infile: input file to the function
-        """
-        #TODO: Implement the function
+    @classmethod
+    def load(cls, infile: str):
+        with open(infile, 'r') as fin:
+            # data is expected to be an array of products, each with all the specified keys
+            data = json.load(fin)
+        products = {product["code"]: Product(**product) for product in data}
+        return Stock(products=products)
     
     def __str__(self) -> str:
-        """Returns a string representation of the stock
-        """
-        #TODO: Return the description of the stock with a nice output showing the ID, Name, Brand, Description, Quantity, Price, and the requires_prescription field
+        ## idea for improvement: add a sort by field to be used
+        output = '*' * 102 + '\n'
+        output += f'| ID   | Name       | Brand      | Description               | Qty. | Price (RWF) | W/O Prescription |\n'
+        output += '\n'.join([f'| {product.code[:4]:>4} | {product.name[:10]:<10} | {product.brand[:10]:<10} | {product.description[:25]:<25} | {product.quantity:>4} | {product.price:>11} | {"false" if product.requires_prescription else "true":>16} |' for product in self.products.values()])
+        output += '\n' + '*' * 102
+        return output
