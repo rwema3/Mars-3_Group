@@ -54,8 +54,6 @@ class FileHandler{
 
         vector<Product> pList;
         ProductClass pClass;
-
-
         pList = readJsonFile();
 
         pList.push_back(p);
@@ -71,11 +69,9 @@ class FileHandler{
             jsonFile<<"["<<endl;
             jsonFile<< pClass.toJson(p)<<endl;
             jsonFile<<"]"<<endl;
-            
             jsonFile.close();
             return;
 
-            
        // Delete the file.
     int ret = remove(filename.c_str());
     if (ret != 0) {

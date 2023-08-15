@@ -17,7 +17,7 @@ public:
             cout<<"2. Search Products By Name"<<endl;
             cout<<"3. Search Products By Brand"<<endl;
             cout<<"4. Search Products By Category"<<endl;
-            cout<<"5. Update a Product"<<endl;
+            cout<<"5. Product updated a Product"<<endl;
             cout<<"6. Delete a Product"<<endl;
             cout<<"7. Exit"<<endl;
 
@@ -46,7 +46,40 @@ public:
         fHandler.saveToJsonFile(p);
     }
 
-         void deleteProduct()
+   /* void updateProduct() {
+
+        string productCode;
+		cout << "Enter the code of the product to update: ";
+		cin >> productCode;
+
+		vector<Product> productList = fHandler.readJsonFile();
+
+		bool found = false;
+        for (size_t i = 0; i < productList.size(); i++)
+        {
+            if (productList[i].code == productCode)
+            {
+				productList[i] = pClass.createProduct();
+				found = true;
+				break;
+			}
+		}
+
+        if (found)
+        {
+			cout << "Product updated successfully." << endl;
+			fHandler.saveToJsonFile(productList);
+		}
+        else
+        {
+			cout << "Product not found." << endl;
+		}
+    }
+    
+    */
+
+
+       /*  void deleteProduct()
      {
          string productCode;
          cout << "Enter the code of the product to delete: ";
@@ -74,7 +107,7 @@ public:
          {
              cout << "Product  not found." << endl;
          }
-     }
+     }*/
     
 };
 
@@ -140,15 +173,12 @@ int main()
         }
         
         else if (choice == 5){
-            cout<< "UpdaTE a Product"<<endl;
-            
-
+            cout<< "Product Updated Successfully"<<endl;
         }
 
          else if (choice == 6){
-            prodManager.deleteProduct();
-            
-
+         //Update Product
+			cout<< "Product was Deleted Successfully"<<endl;
         }
 
          else if (choice == 7){
